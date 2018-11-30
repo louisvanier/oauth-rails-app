@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>TattooManager</title>
+    <meta name="google-signin-client_id" content="<%= Rails.application.credentials.google_oauth2[:id] %>">
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <%= yield %>
+    <p class='notice'><%= notice %></p>
+    <p class='alert'><<%= alert %>/p>
+  </body>
+</html>
