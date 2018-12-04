@@ -11,8 +11,8 @@ development:
   <<: *default
   database: oauth-rails-app
   host: localhost
-  username: louisvanier
-  password:
+  username: oauth_rails_app
+  password: password
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
