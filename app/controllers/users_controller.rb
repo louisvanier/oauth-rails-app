@@ -7,5 +7,8 @@ class UsersController < ApplicationController
   end
 
   def index
+    return :unauthorized unless is_admin?
+    @users = User.all
+    render :index
   end
 end

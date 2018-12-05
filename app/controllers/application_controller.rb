@@ -10,7 +10,13 @@ class ApplicationController < ActionController::Base
   end
 
   def current_tenant
-    return NilTenant if is_public_apartment?
-    Tenant.find_by(subdomain: Apartment::Tenant.current)
+    @curren_tenant ||= begin
+      return NilTenant.new if is_public_apartment?
+      Tenant.find_by(subdomain: Apartment::Tenant.current)
+    end
+  end
+
+  def is_admin?
+    current_tenant.is_admin?(current_user.email)
   end
 end
