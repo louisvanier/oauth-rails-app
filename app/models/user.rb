@@ -1,7 +1,7 @@
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  devise :registerable, :recoverable, :rememberable, :validatable,
+  devise :registerable, :rememberable, :validatable,
          :omniauthable, omniauth_providers: [:google_oauth2, :facebook]
 
   def self.from_omniauth(access_token)
@@ -17,5 +17,13 @@ class User < ApplicationRecord
       )
     end
     user
+  end
+
+  def active_for_authentication?
+    super && approved
+  end
+
+  def inactive_message
+    approved ? nil : :not_approved
   end
 end

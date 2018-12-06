@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   get 'users/login'
   get 'users/index'
   match 'users/delete/:id', to: 'users#delete', via: [:delete]
+  match 'users/approve/:id', to: 'users#approve', via: [:patch]
   get 'revenue_shares/index'
   get 'revenue_shares/new'
   root 'users#login'

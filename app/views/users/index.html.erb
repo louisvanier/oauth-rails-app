@@ -1,10 +1,30 @@
-<h1>list of current users</h1>
+<h1>list of users awaiting</h1>
 <table>
   <tr>
     <th>Email address</th>
     <th>Date joined</th>
     <th>Date approved</th>
-    <th>Admin?</th>
+    <th>approve</th>
+    <th>delete</th>
   </tr>
-  <%= render @users %>
+  <%= render @users_to_approve, locals: { render_approve: true, render_delete: true} %>
+</table>
+<h1>list of Admins</h1>
+<table>
+  <tr>
+    <th>Email address</th>
+    <th>Date joined</th>
+    <th>Date approved</th>
+  </tr>
+  <%= render @admin_users, locals: { render_approve: false, render_delete: false } %>
+</table>
+<h1>regular users</h1>
+<table>
+  <tr>
+    <th>Email address</th>
+    <th>Date joined</th>
+    <th>Date approved</th>
+    <th>delete</th>
+  </tr>
+  <%= render @standard_users, locals: { render_approve: false, render_delete: true } %>
 </table>

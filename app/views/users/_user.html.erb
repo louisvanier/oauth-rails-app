@@ -2,10 +2,18 @@
     <td><%= user.email %></td>
     <td><%= user.created_at.strftime('%F%T') %></td>
     <td><%= user.updated_at.strftime('%F%T') %></td>
-    <td><%= current_tenant.is_admin?(user.email) %></td>
-    <td>
-      <%= form_for user, url: { action: 'delete', id: user.id }, method: 'delete' do |f| %>
-        <%= f.submit 'delete' %>
-      <% end %>
-    </td>
+    <% if render_approve %>
+        <td>
+          <%= form_for user, url: { action: 'approve', id: user.id }, method: 'patch' do |f| %>
+            <%= f.submit 'approve' %>
+          <% end %>
+        </td>
+    <% end %>
+    <% if render_delete %>
+        <td>
+          <%= form_for user, url: { action: 'delete', id: user.id }, method: 'delete' do |f| %>
+            <%= f.submit 'delete' %>
+          <% end %>
+        </td>
+    <% end %>
 </tr>
