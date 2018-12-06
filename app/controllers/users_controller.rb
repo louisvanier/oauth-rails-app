@@ -40,8 +40,8 @@ class UsersController < ApplicationController
       return :unauthorized
     end
 
-    User.find_by!(id: params.permit(:id)[:id])
-    if user.update_attribute(:approved, true)
+    user_to_approve = User.find_by!(id: params.permit(:id)[:id])
+    if user_to_approve.update_attribute(:approved, true)
       flash[:notice] = "User successfully approved"
     else
       flash[:warning] = "Unable to approve user at the moment"
