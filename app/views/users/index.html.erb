@@ -1,30 +1,84 @@
-<h1>list of users awaiting</h1>
-<table>
-  <tr>
-    <th>Email address</th>
-    <th>Date joined</th>
-    <th>Date approved</th>
-    <th>approve</th>
-    <th>delete</th>
-  </tr>
-  <%= render partial: 'user', collection: users_to_approve, as: :user, locals: { render_approve: true, render_delete: true } || raw("") %>
-</table>
-<h1>list of Admins</h1>
-<table>
-  <tr>
-    <th>Email address</th>
-    <th>Date joined</th>
-    <th>Date approved</th>
-  </tr>
-  <%= render partial: 'user', collection: admin_users, as: :user, locals: { render_approve: false, render_delete: false } || raw("") %>
-</table>
-<h1>regular users</h1>
-<table>
-  <tr>
-    <th>Email address</th>
-    <th>Date joined</th>
-    <th>Date approved</th>
-    <th>delete</th>
-  </tr>
-  <%= render partial: 'user', collection: standard_users, as: :user, locals: { render_approve: false, render_delete: true } || raw("") %>
-</table>
+
+<div class="container-fluid">
+    <div class="mt-4">
+        <div class="row">
+            <div class=col-sm-1>
+                <button class="btn btn-secondary" data-toggle="collapse" data-target="#UsersToApprove">Show/Hide</button>
+            </div>
+            <div class="col-sm">
+                <span class="pl-2 align-bottom">Awaiting approval</span>
+            </div>
+        </div>
+    </div>
+    <div class="card<%= users_to_approve.length == 0 ? ' collapse' : '' %>" id="UsersToApprove">
+        <div class="row">
+            <div class="col-sm-3 font-weight-bold">
+                Email address
+            </div>
+            <div class="col-sm-2 font-weight-bold">
+                Date joined
+            </div>
+            <div class="col-sm-2 font-weight-bold">
+                Date approved
+            </div>
+            <div class="col-sm-1 font-weight-bold">
+                approve
+            </div>
+            <div class="col-sm-1 font-weight-bold">
+                delete
+            </div>
+        </div>
+    </div>
+    <%= render partial: 'user', collection: users_to_approve, as: :user, locals: { render_approve: true, render_delete: true } || raw("") %>
+    <div class="mt-4">
+        <div class="row">
+            <div class=col-sm-1>
+                <button class="btn btn-secondary" data-toggle="collapse" data-target="#AdminUsers">Show/Hide</button>
+            </div>
+            <div class="col-sm">
+                <span class="pl-2 align-bottom">Admins</span>
+            </div>
+        </div>
+    </div>
+    <div class="card<%= admin_users.length == 0 ? ' collapse' : '' %>" id="AdminUsers">
+        <div class="row">
+            <div class="col-sm-3 font-weight-bold">
+                Email address
+            </div>
+            <div class="col-sm-2 font-weight-bold">
+                Date joined
+            </div>
+            <div class="col-sm-2 font-weight-bold">
+                Date approved
+            </div>
+        </div>
+        <%= render partial: 'user', collection: admin_users, as: :user, locals: { render_approve: false, render_delete: false } || raw("") %>
+    </div>
+    <div class="mt-4">
+        <div class="row">
+            <div class=col-sm-1>
+                <button class="btn btn-secondary"data-toggle="collapse" data-target="#RegularUsers">Show/Hide</button>
+            </div>
+            <div class="col-sm">
+                <span class="pl-2 align-middle">Regular users</span>
+            </div>
+        </div>
+    </div>
+    <div class="card<%= standard_users.length == 0 ? ' collapse' : '' %>" id="RegularUsers">
+        <div class="row">
+            <div class="col-sm-3 font-weight-bold">
+                Email address
+            </div>
+            <div class="col-sm-2 font-weight-bold">
+                Date joined
+            </div>
+            <div class="col-sm-2 font-weight-bold">
+                Date approved
+            </div>
+            <div class="col-sm-1 font-weight-bold">
+                delete
+            </div>
+        </div>
+        <%= render partial: 'user', collection: standard_users, as: :user, locals: { render_approve: false, render_delete: true } || raw("") %>
+    </div>
+</div>

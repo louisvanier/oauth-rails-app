@@ -1,19 +1,19 @@
-<tr>
-    <td><%= user.email %></td>
-    <td><%= user.created_at.strftime('%F%T') %></td>
-    <td><%= user.updated_at.strftime('%F%T') %></td>
+<div class="row">
+    <div class="col-sm-3"><%= user.email %></div>
+    <div class="col-sm-2"><%= user.created_at.strftime('%F %T') %></div>
+    <div class="col-sm-2"><%= user.updated_at.strftime('%F %T') %></div>
     <% if render_approve %>
-        <td>
+        <div class="col-sm-1">
           <%= form_for user, url: { action: 'approve', id: user.id }, method: 'patch' do |f| %>
-            <%= f.submit 'approve' %>
+            <%= f.submit 'approve', class: 'btn btn-primary' %>
           <% end %>
-        </td>
+        </div>
     <% end %>
     <% if render_delete %>
-        <td>
+        <div class="col-sm-1">
           <%= form_for user, url: { action: 'delete', id: user.id }, method: 'delete' do |f| %>
-            <%= f.submit 'delete' %>
+            <%= f.submit 'delete', class: 'btn btn-danger'  %>
           <% end %>
-        </td>
+        </div>
     <% end %>
-</tr>
+</div>

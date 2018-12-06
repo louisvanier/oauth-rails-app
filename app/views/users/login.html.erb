@@ -1,11 +1,9 @@
 <h1><%= Apartment::Tenant.current %></h1>
 <% if @user.nil? %>
-<div class="oauth-providers">
-  <div class="oauth-provider"><%= link_to "Sign in with Google", user_google_oauth2_omniauth_authorize_path %></div>
-  <div class="oauth-provider"><%= link_to "Sign in with facebook", user_facebook_omniauth_authorize_path %></div>
-</div>
+  <div class="oauth-provider container-fluid"><%= link_to "Sign in with Google", user_google_oauth2_omniauth_authorize_path %></div>
+  <div class="oauth-provider container-fluid"><%= link_to "Sign in with facebook", user_facebook_omniauth_authorize_path %></div>
 <% else %>
-<div class="username">
+<div class="username container-fluid">
   <%= "Welcome #{@user.name}" %>
 </div>
 <% end %>
