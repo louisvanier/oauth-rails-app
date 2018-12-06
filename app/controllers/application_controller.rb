@@ -2,6 +2,10 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   helper_method :current_tenant
 
+  def after_sing_in_path_for(user)
+    users_login_path
+  end
+
   def is_public_apartment?
     Apartment::Tenant.current == 'public'
   end

@@ -7,7 +7,7 @@
     <th>approve</th>
     <th>delete</th>
   </tr>
-  <%= render @users_to_approve, locals: { render_approve: true, render_delete: true} %>
+  <%= render partial: 'user', collection: users_to_approve, as: :user, locals: { render_approve: true, render_delete: true } || raw("") %>
 </table>
 <h1>list of Admins</h1>
 <table>
@@ -16,7 +16,7 @@
     <th>Date joined</th>
     <th>Date approved</th>
   </tr>
-  <%= render @admin_users, locals: { render_approve: false, render_delete: false } %>
+  <%= render partial: 'user', collection: admin_users, as: :user, locals: { render_approve: false, render_delete: false } || raw("") %>
 </table>
 <h1>regular users</h1>
 <table>
@@ -26,5 +26,5 @@
     <th>Date approved</th>
     <th>delete</th>
   </tr>
-  <%= render @standard_users, locals: { render_approve: false, render_delete: true } %>
+  <%= render partial: 'user', collection: standard_users, as: :user, locals: { render_approve: false, render_delete: true } || raw("") %>
 </table>
