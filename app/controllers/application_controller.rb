@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
+  helper_method :current_tenant
 
   def is_public_apartment?
     Apartment::Tenant.current == 'public'

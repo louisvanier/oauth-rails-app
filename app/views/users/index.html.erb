@@ -4,6 +4,7 @@
     <th>Email address</th>
     <th>Date joined</th>
     <th>Date approved</th>
+    <th>Admin?</th>
   </tr>
-  <%= render @users || "no users found for #{Apartement::Tenant.current}" %>
+  <%= render @users %>
 </table>

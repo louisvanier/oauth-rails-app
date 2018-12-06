@@ -2,4 +2,5 @@
     <td><%= user.email %></td>
     <td><%= user.created_at %></td>
     <td><%= user.updated_at %></td>
+    <td><%= current_tenant.is_admin?(user.email) %></td>
 </tr>
