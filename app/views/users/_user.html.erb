@@ -1,6 +1,11 @@
 <tr>
     <td><%= user.email %></td>
-    <td><%= user.created_at %></td>
-    <td><%= user.updated_at %></td>
+    <td><%= user.created_at.strftime('%F%T') %></td>
+    <td><%= user.updated_at.strftime('%F%T') %></td>
     <td><%= current_tenant.is_admin?(user.email) %></td>
+    <td>
+      <%= form_for user, url: { action: 'delete', id: user.id }, method: 'delete' do |f| %>
+        <%= f.submit 'delete' %>
+      <% end %>
+    </td>
 </tr>
