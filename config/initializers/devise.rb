@@ -289,5 +289,5 @@ Devise.setup do |config|
   # end
 
   config.omniauth :google_oauth2, Rails.application.credentials.google_oauth2[:id], Rails.application.credentials.google_oauth2[:secret], strategy_class: OmniAuth::Strategies::GoogleOauth2
-  config.omniauth :facebook,  Rails.application.credentials.facebook[:id], Rails.application.credentials.facebook[:key], info_fields: 'name,email'
+  config.omniauth :facebook,  Rails.application.credentials.facebook[:id], Rails.application.credentials.facebook[:secret], info_fields: 'name,email,profile_pic'
 end
