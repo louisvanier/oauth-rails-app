@@ -1,0 +1,45 @@
+
+  <div class="carousel-item<%= user_counter == 0 ? ' active' : '' %>">
+    <div class="row">
+      <div class="col">
+        Email
+      </div>
+      <div class="col">
+        <%= user.email %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        Date joined
+      </div>
+      <div class="col">
+        <%= user.created_at.strftime('%F') %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        Date approved
+      </div>
+      <div class="col">
+        <%= user.updated_at.strftime('%F') %>
+      </div>
+    </div>
+    <% if render_approve %>
+      <div class="row">
+        <div class="col">
+          <%= form_for user, url: { action: 'approve', id: user.id }, method: 'patch' do |f| %>
+            <%= f.submit 'approve', class: 'btn btn-primary' %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+    <% if render_delete %>
+      <div class="row">
+        <div class="col">
+          <%= form_for user, url: { action: 'delete', id: user.id }, method: 'delete' do |f| %>
+            <%= f.submit 'delete', class: 'btn btn-danger'  %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
