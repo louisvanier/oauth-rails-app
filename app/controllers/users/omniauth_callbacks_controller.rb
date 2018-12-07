@@ -23,7 +23,11 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   def handle_callback(provider_name:)
-    @user = User.from_omniauth(request.env['omniauth.auth'])
+    omniauth_data = request.env['omniauth.auth'].info
+    @user = User.from_omniauth(
+      omniauth_data,
+      current_tenant.is_admin?(omniauth_data['email']),
+    )
 
     if @user.persisted?
       flash[:notice] = 'Your authentication was successful, an administrator will approve your account' unless @user.approved
