@@ -1,17 +1,15 @@
 <div class="container-fluid">
     <div class="mt-4">
         <div class="row">
-            <div class=col-sm-2>
-                <button class="btn btn-secondary" data-toggle="collapse" data-target="#UsersToApprove">Show/Hide</button>
-            </div>
-            <div class="col-sm">
-                <span class="pl-2 align-bottom">Awaiting approval</span>
+            <div class="col">
+                <h3>Awaiting approval <span class="badge badge-dark"><%= users_to_approve.length %></span></h3>
             </div>
         </div>
     </div>
     <div class="d-block d-md-none carousel slide" id="UsersToApproveCarousel" data-ride="carousel">
+        <% if users_to_approve.length > 0 %>
         <div class="carousel-inner" role="listbox">
-            <%= render partial: 'user_carousel', collection: users_to_approve, as: :user, locals: { render_approve: true, render_delete: true } || raw("") %>
+            <%= render partial: 'user_carousel', collection: users_to_approve, as: :user, locals: { render_approve: true, render_delete: true } %>
         </div>
         <div class="row">
             <div class="col">
@@ -25,42 +23,36 @@
                 </a>
             </div>
         </div>
+        <% else %>
+        No pending approvals
+        <% end %>
     </div>
-    <div class="card d-none d-md-block<%= users_to_approve.length == 0 ? ' collapse' : '' %>" id="UsersToApprove">
+    <div class="card d-none d-md-block" id="UsersToApprove">
         <div class="row">
-            <div class="col-sm-3 font-weight-bold">
+            <div class="col-3 font-weight-bold">
                 Email address
             </div>
-            <div class="col-sm-3 font-weight-bold">
+            <div class="col-3 font-weight-bold">
                 Date joined
             </div>
-            <div class="col-sm-3 font-weight-bold">
+            <div class="col font-weight-bold">
                 Date approved
-            </div>
-            <div class="col-sm font-weight-bold">
-                approve
-            </div>
-            <div class="col-sm font-weight-bold">
-                delete
             </div>
         </div>
         <div class="data-row_wrapper">
-            <%= render partial: 'user', collection: users_to_approve, as: :user, locals: { render_approve: true, render_delete: true } || raw("") %>
+            <%= render partial: 'user', collection: users_to_approve, as: :user, locals: { render_approve: true, render_delete: true } || raw("No pending approvals") %>
         </div>
     </div>
     <div class="mt-4">
         <div class="row">
-            <div class=col-sm-2>
-                <button class="btn btn-secondary" data-toggle="collapse" data-target="#AdminUsers">Show/Hide</button>
-            </div>
-            <div class="col-sm">
-                <span class="pl-2 align-bottom">Admins</span>
+            <div class="col">
+                <h3>Admins <span class="badge badge-dark"><%= admin_users.length %></span></h3>
             </div>
         </div>
     </div>
     <div class="d-block d-md-none carousel slide" data-ride="carousel">
         <div class="carousel-inner" id="AdminUsersCarousel" role="listbox">
-            <%= render partial: 'user_carousel', collection: admin_users, as: :user, locals: { render_approve: false, render_delete: false } || raw("") %>
+            <%= render partial: 'user_carousel', collection: admin_users, as: :user, locals: { render_approve: false, render_delete: false } || raw("No admin users") %>
         </div>
         <a class="carousel-control-prev" href="#AdminUsersCarousel" role="button" data-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -69,60 +61,58 @@
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
         </a>
     </div>
-    <div class="card d-none d-md-block<%= admin_users.length == 0 ? ' collapse' : '' %>" id="AdminUsers">
+    <div class="card d-none d-md-block" id="AdminUsers">
         <div class="row">
-            <div class="col-sm-3 font-weight-bold">
+            <div class="col-3 font-weight-bold">
                 Email address
             </div>
-            <div class="col-sm-3 font-weight-bold">
+            <div class="col-3 font-weight-bold">
                 Date joined
             </div>
-            <div class="col-sm font-weight-bold">
+            <div class="col font-weight-bold">
                 Date approved
             </div>
         </div>
         <div class="data-row_wrapper">
-            <%= render partial: 'user', collection: admin_users, as: :user, locals: { render_approve: false, render_delete: false } || raw("") %>
+            <%= render partial: 'user', collection: admin_users, as: :user, locals: { render_approve: false, render_delete: false } %>
         </div>
     </div>
     <div class="mt-4">
         <div class="row">
-            <div class=col-sm-2>
-                <button class="btn btn-secondary"data-toggle="collapse" data-target="#RegularUsers">Show/Hide</button>
-            </div>
-            <div class="col-sm">
-                <span class="pl-2 align-middle">Regular users</span>
+            <div class="col">
+                <h3>Regular users <span class="badge badge-dark"><%= standard_users.length %></span></h3>
             </div>
         </div>
     </div>
     <div class="d-block d-md-none carousel slide" data-ride="carousel">
-        <div class="carousel-inner" id="RegularUsersCarousel" role="listbox">
-            <%= render partial: 'user_carousel', collection: standard_users, as: :user, locals: { render_approve: false, render_delete: true } || raw("") %>
-        </div>
-        <a class="carousel-control-prev" href="#RegularUsersCarousel" role="button" data-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        </a>
-        <a class="carousel-control-next" href="#RegularUsersCarousel" role="button" data-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        </a>
+        <% if standard_users.length > 0 %>
+            <div class="carousel-inner" id="RegularUsersCarousel" role="listbox">
+                <%= render partial: 'user_carousel', collection: standard_users, as: :user, locals: { render_approve: false, render_delete: true } %>
+            </div>
+            <a class="carousel-control-prev" href="#RegularUsersCarousel" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            </a>
+            <a class="carousel-control-next" href="#RegularUsersCarousel" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            </a>
+        <% else %>
+            <p>No users</p>
+        <% end %>
     </div>
-    <div class="card d-none d-md-block<%= standard_users.length == 0 ? ' collapse' : '' %>" id="RegularUsers">
+    <div class="card d-none d-md-block" id="RegularUsers">
         <div class="row">
-            <div class="col-sm-3 font-weight-bold">
+            <div class="col-3 font-weight-bold">
                 Email address
             </div>
-            <div class="col-sm-3 font-weight-bold">
+            <div class="col-3 font-weight-bold">
                 Date joined
             </div>
-            <div class="col-sm-3 font-weight-bold">
+            <div class="col font-weight-bold">
                 Date approved
-            </div>
-            <div class="col-sm font-weight-bold">
-                delete
             </div>
         </div>
         <div class="data-row_wrapper">
-            <%= render partial: 'user', collection: standard_users, as: :user, locals: { render_approve: false, render_delete: true } || raw("") %>
+            <%= render partial: 'user', collection: standard_users, as: :user, locals: { render_approve: false, render_delete: true } %>
         </div>
     </div>
 </div>

@@ -13,3 +13,9 @@
  *= require_tree .
  *= require_self
  */
+
+.carousel .carousel-control-prev-icon,
+  .carousel .carousel-control-next-icon {
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 20%;
+}
