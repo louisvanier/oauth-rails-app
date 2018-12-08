@@ -1,16 +1,17 @@
 <div class="row">
-    <div class="col-sm-3"><%= user.email %></div>
-    <div class="col-sm-3"><%= user.created_at.strftime('%F %T') %></div>
-    <div class="col-sm-3"><%= user.updated_at.strftime('%F %T') %></div>
+    <div class="col-1"><image src="<%= user.image_url %>" height=50 width=50 /></div>
+    <div class="col-3 align-self-center"><%= user.email %></div>
+    <div class="col-2 align-self-center"><%= user.created_at.strftime('%F %T') %></div>
+    <div class="col-2 align-self-center"><%= user.updated_at.strftime('%F %T') %></div>
     <% if render_approve %>
-        <div class="col-sm-2">
+        <div class="col-2">
           <%= form_for user, url: { action: 'approve', id: user.id }, method: 'patch' do |f| %>
             <%= f.submit 'approve', class: 'btn btn-primary' %>
           <% end %>
         </div>
     <% end %>
     <% if render_delete %>
-        <div class="col-sm">
+        <div class="col">
           <%= form_for user, url: { action: 'delete', id: user.id }, method: 'delete' do |f| %>
             <%= f.submit 'delete', class: 'btn btn-danger'  %>
           <% end %>

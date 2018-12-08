@@ -1,6 +1,11 @@
 
   <div class="carousel-item<%= user_counter == 0 ? ' active' : '' %>">
     <div class="row">
+      <div class="col-12 justify-content-center">
+        <image class="user-profile__picture" src="<%= user.image_url %>" height=50 width=50 />
+      </div>
+    </div>
+    <div class="row">
       <div class="col-5 font-weight-bold bg-secondary text-white rounded-top">
         Email
       </div>

@@ -23,3 +23,6 @@
 .carousel-item .col {
     word-break: break-word;
 }
+.user-profile__picture {
+    border-radius: 50%
+}

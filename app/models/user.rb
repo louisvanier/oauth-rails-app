@@ -13,6 +13,7 @@ class User < ApplicationRecord
         password: Devise.friendly_token[0,20],
         provider: omniauth_data.provider,
         uid: omniauth_data.uid,
+        image_url: omniauth_data['image'],
         approved: approved,
       )
     end
