@@ -1,7 +1,7 @@
 
   <div class="carousel-item<%= user_counter == 0 ? ' active' : '' %>">
-    <div class="row">
-      <div class="col-12 justify-content-center">
+    <div class="row justify-content-center">
+      <div>
         <image class="user-profile__picture" src="<%= user.image_url %>" height=50 width=50 />
       </div>
     </div>
@@ -31,7 +31,7 @@
     </div>
     <% if render_approve %>
       <div class="row justify-content-center mt-3">
-        <div class="col-3">
+        <div>
           <%= form_for user, url: { action: 'approve', id: user.id }, method: 'patch', class: 'center-block' do |f| %>
             <%= f.submit 'approve', class: 'btn btn-primary' %>
           <% end %>
@@ -40,7 +40,7 @@
     <% end %>
     <% if render_delete %>
       <div class="row justify-content-center mt-1">
-        <div class="col-3">
+        <div>
           <%= form_for user, url: { action: 'delete', id: user.id }, method: 'delete', class: 'center-block' do |f| %>
             <%= f.submit 'delete', class: 'btn btn-danger'  %>
           <% end %>

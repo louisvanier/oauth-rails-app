@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-1"><image src="<%= user.image_url %>" height=50 width=50 /></div>
+    <div class="col-1"><image class="user-profile__picture" src="<%= user.image_url %>" height=50 width=50 /></div>
     <div class="col-3 align-self-center"><%= user.email %></div>
     <div class="col-2 align-self-center"><%= user.created_at.strftime('%F %T') %></div>
     <div class="col-2 align-self-center"><%= user.updated_at.strftime('%F %T') %></div>
