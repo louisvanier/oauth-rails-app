@@ -4,7 +4,7 @@
       <div class="col-5 font-weight-bold bg-secondary text-white rounded-top">
         Email
       </div>
-      <div class="col">
+      <div class="col-7">
         <%= user.email %>
       </div>
     </div>
@@ -12,7 +12,7 @@
       <div class="col-5 font-weight-bold bg-secondary text-white">
         Date joined
       </div>
-      <div class="col">
+      <div class="col-7">
         <%= user.created_at.strftime('%F') %>
       </div>
     </div>
@@ -20,7 +20,7 @@
       <div class="col-5 font-weight-bold bg-secondary text-white rounded-bottom">
         Date approved
       </div>
-      <div class="col">
+      <div class="col-7">
         <%= user.updated_at.strftime('%F') %>
       </div>
     </div>
