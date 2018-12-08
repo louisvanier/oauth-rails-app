@@ -1,7 +1,7 @@
 
   <div class="carousel-item<%= user_counter == 0 ? ' active' : '' %>">
     <div class="row">
-      <div class="col font-weight-bold bg-secondary text-white rounded-top">
+      <div class="col-5 font-weight-bold bg-secondary text-white rounded-top">
         Email
       </div>
       <div class="col">
@@ -9,7 +9,7 @@
       </div>
     </div>
     <div class="row">
-      <div class="col font-weight-bold bg-secondary text-white">
+      <div class="col-5 font-weight-bold bg-secondary text-white">
         Date joined
       </div>
       <div class="col">
@@ -17,7 +17,7 @@
       </div>
     </div>
     <div class="row">
-      <div class="col font-weight-bold bg-secondary text-white rounded-bottom">
+      <div class="col-5 font-weight-bold bg-secondary text-white rounded-bottom">
         Date approved
       </div>
       <div class="col">
@@ -25,18 +25,18 @@
       </div>
     </div>
     <% if render_approve %>
-      <div class="row">
-        <div class="col">
-          <%= form_for user, url: { action: 'approve', id: user.id }, method: 'patch' do |f| %>
+      <div class="row justify-content-center mt-3">
+        <div class="col-3">
+          <%= form_for user, url: { action: 'approve', id: user.id }, method: 'patch', class: 'center-block' do |f| %>
             <%= f.submit 'approve', class: 'btn btn-primary' %>
           <% end %>
         </div>
       </div>
     <% end %>
     <% if render_delete %>
-      <div class="row">
-        <div class="col">
-          <%= form_for user, url: { action: 'delete', id: user.id }, method: 'delete' do |f| %>
+      <div class="row justify-content-center mt-1">
+        <div class="col-3">
+          <%= form_for user, url: { action: 'delete', id: user.id }, method: 'delete', class: 'center-block' do |f| %>
             <%= f.submit 'delete', class: 'btn btn-danger'  %>
           <% end %>
         </div>
