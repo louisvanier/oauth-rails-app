@@ -1,9 +1,23 @@
-<h1><%= Apartment::Tenant.current %></h1>
-<% if @user.nil? %>
-  <div class="oauth-provider container-fluid"><%= link_to "Sign in with Google", user_google_oauth2_omniauth_authorize_path %></div>
-  <div class="oauth-provider container-fluid"><%= link_to "Sign in with facebook", user_facebook_omniauth_authorize_path %></div>
-<% else %>
-<div class="username container-fluid">
-  <%= "Welcome #{@user.name}" %>
+<div class="row justify-content-center">
+  <h1><%= Apartment::Tenant.current %></h1>
 </div>
+<% if @user.nil? %>
+  <div class="container">
+    <div class="oauth-provider row justify-content-center login-icon__wrapper">
+      <%= link_to user_google_oauth2_omniauth_authorize_path, class: 'border border-dark rounded col-6 p-2' do %>
+          <%= inline_svg('google_logo') %>
+          <span>Sign in with Google</span>
+      <% end %>
+    </div>
+    <div class="oauth-provider row mt-1 justify-content-center login-icon__wrapper">
+      <%= link_to user_facebook_omniauth_authorize_path, class: 'border border-dark rounded col-6 p-2' do %>
+          <%= inline_svg('facebook_logo') %>
+        <span>Sign in with facebook</span>
+      <% end %>
+    </div>
+  </div>
+  <% else %>
+  <div class="row justify-content-center">
+    <%= "Welcome #{@user.name}" %>
+  </div>
 <% end %>
