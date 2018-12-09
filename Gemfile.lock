@@ -69,6 +69,11 @@ GEM
       warden (~> 1.2.3)
     erubi (1.7.1)
     execjs (2.7.0)
+    factory_bot (4.11.1)
+      activesupport (>= 3.0.0)
+    factory_bot_rails (4.11.1)
+      factory_bot (~> 4.11.1)
+      railties (>= 3.0.0)
     faraday (0.15.4)
       multipart-post (>= 1.2, < 3)
     ffi (1.9.25)
@@ -219,6 +224,7 @@ DEPENDENCIES
   byebug
   coffee-rails (~> 4.2)
   devise
+  factory_bot_rails
   jbuilder (~> 2.5)
   jquery-rails
   listen (~> 3.0.5)
