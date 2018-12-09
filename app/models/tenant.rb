@@ -10,6 +10,6 @@ class NilTenant
   end
 
   def is_admin?(email_address)
-    email_address == ENV.fetch('PUBLIC_TENANT_ADMIN') { 'vanier.louis@gmail.com' }
+    email_address == (ENV.fetch('PUBLIC_TENANT_ADMIN') || 'admin@tehg4m3.com')
   end
 end
