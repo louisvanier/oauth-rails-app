@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
   end
 
   def new_session_path(_)
-  	new_user_session_path
+    users_login_url
   end
 
   def current_tenant

@@ -1,4 +1,8 @@
 class UsersController < ApplicationController
+  rescue_from ActiveRecord::RecordNotFound do |_|
+    head :not_found
+  end
+
   before_action :authenticate_user!, except: :login
 
   helper_method  :admin_users, :users_to_approve, :standard_users
@@ -12,7 +16,7 @@ class UsersController < ApplicationController
   def index
     unless is_admin?
       Rails.logger.info("[UNAUTHORIZED] non-admin user hitting #index endpoint")
-      return :unauthorized
+      return head :unauthorized
     end
     @users = User.all
     render :index
@@ -21,7 +25,7 @@ class UsersController < ApplicationController
   def delete
     unless is_admin?
       Rails.logger.info("[UNAUTHORIZED] non-admin user hitting #delete endpoint")
-      return :unauthorized
+      return head :unauthorized
     end
     user_to_delete = User.find_by!(id: params.permit(:id)[:id])
     if user_to_delete.delete
@@ -37,7 +41,7 @@ class UsersController < ApplicationController
   def approve
     unless is_admin?
       Rails.logger.info("[UNAUTHORIZED] non-admin user hitting #approve endpoint")
-      return :unauthorized
+      return head :unauthorized
     end
 
     user_to_approve = User.find_by!(id: params.permit(:id)[:id])

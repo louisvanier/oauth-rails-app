@@ -2,14 +2,22 @@ Rails.application.routes.draw do
   devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }, skip: [:session]
 
   devise_scope :user do
+    get '/sign_in' => "users#login", as: :new_user_session
     delete '/sign_out' => 'devise/sessions#destroy', as: :destroy_user_session
-    get 'users/login', to: 'devise/sessions#new'
-    post 'users/login', to: 'devise/sessions#create'
+    post 'users/login', to: 'devise/sessions#create', as: :user_session
   end
 
-  get 'users/index'
-  match 'users/delete/:id', to: 'users#delete', via: [:delete]
-  match 'users/approve/:id', to: 'users#approve', via: [:patch]
+  resources :users, only: [] do
+    member do
+      delete :delete
+      patch :approve
+    end
+  end
+
+  match 'users/manage', to: 'users#index', via: [:get]
+
+  match 'users/login', to: 'users#login', via: [:get]
+
   get 'revenue_shares/index'
   get 'revenue_shares/new'
   root 'users#login'
