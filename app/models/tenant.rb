@@ -1,4 +1,12 @@
 class Tenant < ApplicationRecord
+  PUBLIC_APARTMENT = 'public'
+  class << self
+    def from_subdomain(subdomain:)
+      return NilTenant.new if subdomain == PUBLIC_APARTMENT
+      Tenant.find_by(subdomain: subdomain)
+    end
+  end
+
   def is_admin?(email_address)
     admins.include?(email_address)
   end

@@ -1,6 +1,19 @@
 require 'test_helper'
 
 class TenantTest < ActiveSupport::TestCase
+  test 'Tenant#from_subdomain returns a NilTenant if the subdomain is the Tenant::PUBLIC_APARTMENT' do
+    assert_instance_of NilTenant, Tenant.from_subdomain(subdomain: Tenant::PUBLIC_APARTMENT)
+  end
+
+  test 'Tenant#from_subdomain returns nil if not the public tenant and not existing' do
+    assert_nil Tenant.from_subdomain(subdomain: 'rainbows-and-unicorns')
+  end
+
+  test 'Tenant#from_subdomain returns the tenant by subdomain lookup' do
+    new_tenant = create(:tenant, subdomain: 'heavy-metal')
+    assert_equal new_tenant, Tenant.from_subdomain(subdomain: 'heavy-metal')
+  end
+
   test '#is_admin? returns true if the email address is in the admins array' do
     assert create(:tenant, admins: ['abcdef@example.com']).is_admin?('abcdef@example.com')
   end

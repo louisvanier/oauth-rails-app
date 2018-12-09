@@ -6,19 +6,12 @@ class ApplicationController < ActionController::Base
     users_login_path
   end
 
-  def is_public_apartment?
-    Apartment::Tenant.current == 'public'
-  end
-
   def new_session_path(_)
   	new_user_session_path
   end
 
   def current_tenant
-    @curren_tenant ||= begin
-      return NilTenant.new if is_public_apartment?
-      Tenant.find_by(subdomain: Apartment::Tenant.current)
-    end
+    @current_tenant ||= Tenant.from_subdomain(subdomain: Apartment::Tenant.current)
   end
 
   def is_admin?
