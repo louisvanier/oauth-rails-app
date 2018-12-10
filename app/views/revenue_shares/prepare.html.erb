@@ -1,0 +1,15 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col">
+      <%= render partial: 'form', locals: { revenue_share: @new_revenue_share} %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <h3>Latest revenues</h3>
+    </div>
+  </div>
+  <% @latest_revenue_shares.each do |revenue_share| %>
+      <%= render partial: "#{revenue_share.can_update? ? 'form' : 'revenue_share'}", locals: { revenue_share: revenue_share } %>
+   <% end %>
+</div>

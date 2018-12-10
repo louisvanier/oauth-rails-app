@@ -6,7 +6,7 @@
             </div>
         </div>
     </div>
-    <div class="d-block d-md-none carousel slide" id="UsersToApproveCarousel" data-ride="carousel">
+    <div class="d-block d-md-none carousel slide" id="UsersToApproveCarousel" data-interval="">
         <% if users_to_approve.length > 0 %>
         <div class="carousel-inner" role="listbox">
             <%= render partial: 'user_carousel', collection: users_to_approve, as: :user, locals: { render_approve: true, render_delete: true } %>
@@ -34,10 +34,10 @@
                 Email address
             </div>
             <div class="col-2 font-weight-bold">
-                Date joined
+                Name
             </div>
             <div class="col font-weight-bold">
-                Date approved
+                Share %
             </div>
         </div>
         <div class="data-row_wrapper">
@@ -51,8 +51,8 @@
             </div>
         </div>
     </div>
-    <div class="d-block d-md-none carousel slide" data-ride="carousel">
-        <div class="carousel-inner" id="AdminUsersCarousel" role="listbox">
+    <div class="d-block d-md-none carousel slide" id="AdminUsersCarousel" data-interval="">
+        <div class="carousel-inner" role="listbox">
             <%= render partial: 'user_carousel', collection: admin_users, as: :user, locals: { render_approve: false, render_delete: false } || raw("No admin users") %>
         </div>
         <a class="carousel-control-prev" href="#AdminUsersCarousel" role="button" data-slide="prev">
@@ -69,10 +69,7 @@
                 Email address
             </div>
             <div class="col-2 font-weight-bold">
-                Date joined
-            </div>
-            <div class="col font-weight-bold">
-                Date approved
+                Name
             </div>
         </div>
         <div class="data-row_wrapper">
@@ -86,9 +83,9 @@
             </div>
         </div>
     </div>
-    <div class="d-block d-md-none carousel slide" data-ride="carousel">
+    <div class="d-block d-md-none carousel slide row" id="RegularUsersCarousel" data-interval="0">
         <% if standard_users.length > 0 %>
-            <div class="carousel-inner" id="RegularUsersCarousel" role="listbox">
+            <div class="carousel-inner col" role="listbox">
                 <%= render partial: 'user_carousel', collection: standard_users, as: :user, locals: { render_approve: false, render_delete: true } %>
             </div>
             <a class="carousel-control-prev" href="#RegularUsersCarousel" role="button" data-slide="prev">
@@ -108,10 +105,10 @@
                 Email address
             </div>
             <div class="col-2 font-weight-bold">
-                Date joined
+                Name
             </div>
             <div class="col font-weight-bold">
-                Date approved
+                Share %
             </div>
         </div>
         <div class="data-row_wrapper">

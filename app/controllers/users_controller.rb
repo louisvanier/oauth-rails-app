@@ -9,7 +9,6 @@ class UsersController < ApplicationController
 
   def login
     Rails.logger.info("#{session}")
-    @user = current_user
     render :login, layout: 'layouts/login'
   end
 
@@ -27,11 +26,27 @@ class UsersController < ApplicationController
       Rails.logger.info("[UNAUTHORIZED] non-admin user hitting #delete endpoint")
       return head :unauthorized
     end
-    user_to_delete = User.find_by!(id: params.permit(:id)[:id])
-    if user_to_delete.destroy
+
+    if user.destroy
       flash[:notice] = "User #{user_to_delete.email} successfully deleted"
     else
       flash[:warning] = "failure to delete #{user_to_delete.email}"
+    end
+
+    @users = User.all
+    render :index
+  end
+
+  def update
+    unless is_admin?
+      Rails.logger.info("[UNAUTHORIZED] non-admin user hitting #approve endpoint")
+      return head :unauthorized
+    end
+
+    if user.update_attributes(share_percentage: update_params[:share_percentage])
+      flash[:notice] = "Share percentage updated"
+    else
+      flash[:warning] = "Unable to update user at the moment"
     end
 
     @users = User.all
@@ -44,8 +59,7 @@ class UsersController < ApplicationController
       return head :unauthorized
     end
 
-    user_to_approve = User.find_by!(id: params.permit(:id)[:id])
-    if user_to_approve.update_attribute(:approved, true)
+    if user.update_attributes(approved: true, share_percentage: update_params[:share_percentage])
       flash[:notice] = "User successfully approved"
     else
       flash[:warning] = "Unable to approve user at the moment"
@@ -55,15 +69,25 @@ class UsersController < ApplicationController
     render :index
   end
 
+  private
+
+  def update_params
+    params.require(:user).permit(:id, :share_percentage)
+  end
+
+  def user
+    @user ||= User.find_by!(id: params.permit(:id)[:id])
+  end
+
   def admin_users
-    @users.select { |u| current_tenant.is_admin?(u.email) }
+    @users.select { |u| current_tenant.is_admin?(u.email) }.sort_by(&:name)
   end
 
   def users_to_approve
-    @users.select { |u| !u.approved}
+    @users.select { |u| !u.approved}.sort_by(&:name)
   end
 
   def standard_users
-    @users.select { |u| u.approved && !current_tenant.is_admin?(u.email)}
+    @users.select { |u| u.approved && !current_tenant.is_admin?(u.email)}.sort_by(&:name)
   end
 end

@@ -1,6 +1,8 @@
 class User < ApplicationRecord
   has_many :revenue_shares, inverse_of: :user
 
+  validates :share_percentage, numericality: { greater_than: 0, lower_than: 100 }, presence: true
+
   devise :rememberable, :validatable,
          :omniauthable, omniauth_providers: [:google_oauth2, :facebook]
 

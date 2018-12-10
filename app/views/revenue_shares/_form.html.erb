@@ -11,22 +11,13 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :amount %>
-    <%= form.text_field :amount %>
-  </div>
-
-  <div class="field">
-    <%= form.label :share_due %>
-    <%= form.text_field :share_due %>
-  </div>
-
-  <div class="field">
-    <%= form.label :user_id %>
-    <%= form.text_field :user_id %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit %>
+  <div class="row">
+    <div class="field col-3">
+      <%= form.label :amount %>
+      <%= form.text_field :amount %>
+    </div>
+    <div class="actions col-1">
+      <%= form.submit 'submit', class: 'btn btn-primary' %>
+    </div>
   </div>
 <% end %>

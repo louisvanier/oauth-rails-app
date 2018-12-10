@@ -16,9 +16,9 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   def get_redirection_path(email_address)
     if current_tenant.is_admin?(email_address)
-      users_index_path
+      users_manage_path
     else
-      revenue_shares_new_path
+      prepare_revenu_shares_path
     end
   end
 

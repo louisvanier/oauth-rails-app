@@ -2,11 +2,11 @@ class RevenueShare < ApplicationRecord
   belongs_to :user
   validates :amount, numericality: { greater_than: 0 }, presence: true
 
-  def create(amount: ,share_percentage:, notes:)
+  def create(amount: ,share_percentage:, notes: nil)
     super(
       amount: amount,
       share_due: amount * share_percentage,
-      notes: notes,
+      # notes: notes,
     )
   end
 

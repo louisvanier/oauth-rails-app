@@ -17,13 +17,14 @@ class RevenueSharesController < ApplicationController
 
   def prepare
     @latest_revenue_shares = current_user.revenue_shares.last(5)
+    puts "[RevenueShares#prepare] total_revenue_share = #{@latest_revenue_shares.length}"
     @new_revenue_share = current_user.revenue_shares.build
     render :prepare
   end
 
   def create
-    @revenue_share = RevenueShare.new(revenue_share_params)
-    redirect_to show_share_path, notice: 'Revenue share was successfully created.'
+    current_user.revenue_shares.create(revenue_share_params)
+    redirect_to prepare_revenue_shares_path, notice: 'Revenue share was successfully created.'
   end
 
   def update
@@ -40,6 +41,6 @@ class RevenueSharesController < ApplicationController
   private
     # Never trust parameters from the scary internet, only allow the white list through.
   def revenue_share_params
-    params.require(:revenue_share).permit(:amount, :share_due, :user_id)
+    params.require(:revenue_share).permit(:amount)
   end
 end
