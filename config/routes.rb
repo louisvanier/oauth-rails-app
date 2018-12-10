@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  resources :revenue_shares, only: [:index, :create, :update], format: :html do
+    collection do
+      get :prepare
+    end
+  end
+
   devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }, skip: [:session]
 
   devise_scope :user do

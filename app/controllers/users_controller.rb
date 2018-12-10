@@ -28,7 +28,7 @@ class UsersController < ApplicationController
       return head :unauthorized
     end
     user_to_delete = User.find_by!(id: params.permit(:id)[:id])
-    if user_to_delete.delete
+    if user_to_delete.destroy
       flash[:notice] = "User #{user_to_delete.email} successfully deleted"
     else
       flash[:warning] = "failure to delete #{user_to_delete.email}"

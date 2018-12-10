@@ -5,6 +5,11 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
 
   TEST_SUBDOMAIN = 'black-metal'
 
+  setup do
+    create_tenant(subdomain: TEST_SUBDOMAIN)
+    host! "#{TEST_SUBDOMAIN}.example.com"
+  end
+
   test '#login does not require authentication as it is the landing page' do
     get users_login_url
     assert_response :ok
@@ -16,14 +21,11 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "#index Non-admin users are unauthorized" do
-    create_tenant
-    create_and_sign_in_user
+    create_and_sign_in_user(subdomain: TEST_SUBDOMAIN)
 
-    Apartment::Tenant.switch(TEST_SUBDOMAIN) do
-      get users_manage_url
-      assert_response :unauthorized
-      assert_empty response.body
-    end
+    get users_manage_url
+    assert_response :unauthorized
+    assert_empty response.body
   end
 
   test '#delete requires authentication' do
@@ -32,34 +34,31 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test '#delete Non-admin users are unauthorized' do
-    create_tenant
-    create_and_sign_in_user
+    create_and_sign_in_user(subdomain: TEST_SUBDOMAIN)
 
-    Apartment::Tenant.switch(TEST_SUBDOMAIN) do
-      delete delete_user_url(create(:user))
-      assert_response :unauthorized
-      assert_empty response.body
-    end
+    delete delete_user_url(create(:user))
+    assert_response :unauthorized
+    assert_empty response.body
   end
 
   test '#delete deletes the user' do
-    create_tenant
+    user = nil
     Apartment::Tenant.switch(TEST_SUBDOMAIN) do
       user = create(:user)
-      create_and_sign_in_user(admin: true)
-      delete delete_user_url(user)
-      assert_nil User.find_by(id: user.id)
     end
+    create_and_sign_in_user(admin: true, subdomain: TEST_SUBDOMAIN)
+    delete delete_user_url(user)
+    assert_nil User.find_by(id: user.id)
   end
 
   test '#delete returns a 404 if the user des not exist' do
-    create_tenant
+    user = nil
     Apartment::Tenant.switch(TEST_SUBDOMAIN) do
       user = create(:user)
-      create_and_sign_in_user(admin: true)
-      delete delete_user_url(id: 999)
-      assert_response :not_found
     end
+    create_and_sign_in_user(admin: true, subdomain: TEST_SUBDOMAIN)
+    delete delete_user_url(id: 999)
+    assert_response :not_found
   end
 
   test '#approve requires authentication' do
@@ -68,47 +67,28 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test '#approve Non-admin users are unauthorized' do
-    create_tenant
-    create_and_sign_in_user
+    create_and_sign_in_user(subdomain: TEST_SUBDOMAIN)
 
-    Apartment::Tenant.switch(TEST_SUBDOMAIN) do
-      patch approve_user_url(create(:user))
-      assert_response :unauthorized
-      assert_empty response.body
-    end
+    patch approve_user_url(create(:user))
+    assert_response :unauthorized
+    assert_empty response.body
   end
 
   test '#approve sets the approved flag to true for the user' do
-    create_tenant
+    user = nil
     Apartment::Tenant.switch(TEST_SUBDOMAIN) do
       user = create(:user)
-      create_and_sign_in_user(admin: true)
-      patch approve_user_url(user)
+    end
+    create_and_sign_in_user(admin: true, subdomain: TEST_SUBDOMAIN)
+    patch approve_user_url(user)
+    Apartment::Tenant.switch(TEST_SUBDOMAIN) do
       assert User.find_by(id: user.id).approved
     end
   end
 
   test '#approve returns a 404 if the user des not exist' do
-    create_tenant
-    Apartment::Tenant.switch(TEST_SUBDOMAIN) do
-      user = create(:user)
-      create_and_sign_in_user(admin: true)
-      patch approve_user_url(id: -1)
-      assert_response :not_found
-    end
+    create_and_sign_in_user(admin: true, subdomain: TEST_SUBDOMAIN)
+    patch approve_user_url(id: -1)
+    assert_response :not_found
   end
-
-  private
-
-  def create_tenant(subdomain: TEST_SUBDOMAIN)
-    create(:tenant, subdomain: subdomain, admins: ['black@metal.com'])
-    Apartment::Tenant.create(subdomain)
-  end
-
-  def create_and_sign_in_user(admin: false)
-    email = admin ? 'black@metal.com' : 'death@metal.com'
-    user = create(:user, email: email)
-    sign_in user
-  end
-
 end
