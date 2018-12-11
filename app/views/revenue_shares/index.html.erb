@@ -1,10 +1,60 @@
 <div class="container-fluid">
-  <div class="row">
+  <div id="MobileSearchForm" class="d-md-none">
+    <div id="search-form__collapse-container">
+      <%= form_tag(revenue_shares_index_path, method: 'get') do %>
+        <div class="row text-center">
+          <div class="col small font-weight-bold">between</div>
+        </div>
+        <div class="row text-center">
+          <div class="col">
+            <%= date_field(:q, :start_date, value: @search_filters[:start_date]) %>
+          </div>
+        </div>
+        <div class="row text-center">
+          <div class="col small font-weight-bold">and</div>
+        </div>
+        <div class="row text-center">
+          <div class="col">
+            <%= date_field(:q, :end_date, value: @search_filters[:end_date]) %>
+          </div>
+        </div>
+        <div class="row text-center">
+          <div class="col small font-weight-bold">
+            filter by user
+          </div>
+        </div>
+        <div class="row text-center">
+          <div class="col">
+            <%= select_tag(:employee, options_for_select(@users_for_select, @search_filters[:employee])) %>
+          </div>
+        </div>
+        <div class="row text-center">
+          <div class="col">
+            <%= submit_tag('filter', class: 'btn btn-primary') %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <div id="DesktopSearchForm" class="d-none d-md-block">
+    <div class="row">
+      <div class="col-3 small font-weight-bold text-center">between these dates</div>
+      <div class="col-2 small font-weight-bold text-center">by user</div>
+      <div class="col"></div>
+    </div>
     <%= form_tag(revenue_shares_index_path, method: 'get') do %>
-      <%= date_field(:q, :start_date, value: @search_filters[:start_date]) %>
-      <%= date_field(:q, :end_date, value: @search_filters[:end_date]) %>
-      <%= select_tag(:employee, options_for_select(@users_for_select, @search_filters[:employee])) %>
-      <%= submit_tag('filter') %>
+      <div class="row">
+          <div class="col-3 text-center">
+            <%= date_field(:q, :start_date, value: @search_filters[:start_date]) %>
+            <%= date_field(:q, :end_date, value: @search_filters[:end_date]) %>
+          </div>
+          <div class="col-2 text-center">
+            <%= select_tag(:employee, options_for_select(@users_for_select, @search_filters[:employee])) %>
+          </div>
+          <div class="col">
+            <%= submit_tag('filter', class: 'btn btn-primary') %>
+          </div>
+      </div>
     <% end %>
   </div>
   <div class="row">
