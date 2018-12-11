@@ -12,7 +12,7 @@
   <% end %>
 
   <div class="field">
-    <%= form.text_field :amount, class: "w-50" %>
+    <%= form.text_field :amount, class: "w-50 align-middle" %>
     <%= form.submit "#{revenue_share.id.nil? ? 'add' : 'update'}", class: 'btn btn-primary' %>
   </div>
 <% end %>

@@ -46,7 +46,7 @@
                 <%= f.text_field :share_percentage, class: 'w-25 text-center' %>
             </div>
             <div class="row justify-content-center">
-              <%= f.submit 'approve', class: 'btn btn-primary w-25' %>
+              <%= f.submit "#{render_approve ? 'approve' : 'update'}", class: 'btn btn-primary w-25' %>
             </div>
           <% end %>
         </div>
