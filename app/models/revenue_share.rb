@@ -3,11 +3,12 @@ class RevenueShare < ApplicationRecord
   validates :amount, numericality: { greater_than: 0 }, presence: true
 
   def create(amount: ,share_percentage:, notes: nil)
-    super(
+    assign_attributes(
       amount: amount,
-      share_due: amount * share_percentage,
+      share_due: amount * (share_percentage / 100.0),
       # notes: notes,
     )
+    save
   end
 
   def can_update?

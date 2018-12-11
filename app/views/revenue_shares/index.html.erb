@@ -1,3 +1,32 @@
 <div class="container-fluid">
-
+  <div class="row">
+    <%= form_tag(revenue_shares_index_path, method: 'get') do %>
+      <%= date_field(:q, :start_date, value: @search_filters[:start_date]) %>
+      <%= date_field(:q, :end_date, value: @search_filters[:end_date]) %>
+      <%= select_tag(:employee, options_for_select(@users_for_select, @search_filters[:employee])) %>
+      <%= submit_tag('filter') %>
+    <% end %>
+  </div>
+  <div class="row">
+    <div class="col-4 col-md-5 text-right">TOTALS:</div>
+    <div class="col-4 col-md-2 text-right font-weight-bold"><%= @revenue_shares.sum { |s| s[:amount] } %></div>
+    <div class="col-2 text-right font-weight-bold"><%= @revenue_shares.sum { |s| s[:share_due] || 0 } %></div>
+  </div>
+  <div class="row border-top border-bottom border-dark">
+    <div class="d-none d-md-block col-md-1">
+    </div>
+    <div class="d-none d-md-block col-md-2 font-weight-bold">
+      Name
+    </div>
+    <div class="col-4 col-md-2 font-weight-bold">
+      Date
+    </div>
+    <div class="col-4 col-md-2 font-weight-bold text-right">
+      Amount
+    </div>
+    <div class="col-2 font-weight-bold text-right">
+      Share due
+    </div>
+  </div>
+  <%= render partial: "revenue_share_for_index", collection: @revenue_shares, as: :revenue_share %>
 </div>

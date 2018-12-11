@@ -1,6 +1,6 @@
 <div class="container-fluid">
   <div class="row">
-    <div class="col">
+    <div class="col-6 col-md-4">
       <%= render partial: 'form', locals: { revenue_share: @new_revenue_share} %>
     </div>
   </div>
@@ -9,7 +9,16 @@
       <h3>Latest revenues</h3>
     </div>
   </div>
-  <% @latest_revenue_shares.each do |revenue_share| %>
-      <%= render partial: "#{revenue_share.can_update? ? 'form' : 'revenue_share'}", locals: { revenue_share: revenue_share } %>
-   <% end %>
+  <div class="row">
+    <div class="col-4 col-md-2 font-weight-bold">
+      Date
+    </div>
+    <div class="col-4 col-md-2 font-weight-bold">
+      Amount
+    </div>
+    <div class="col font-weight-bold">
+      Share due
+    </div>
+  </div>
+  <%= render partial: "revenue_share", collection: @latest_revenue_shares, as: :revenue_share %>
 </div>
