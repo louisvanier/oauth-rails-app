@@ -10,17 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_10_052609) do
+ActiveRecord::Schema.define(version: 2018_12_12_022157) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "revenue_shares", force: :cascade do |t|
-    t.money "amount", scale: 2
-    t.money "share_due", scale: 2
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "amount_cents"
+    t.integer "share_due_cents"
+    t.string "currency"
     t.index ["user_id"], name: "index_revenue_shares_on_user_id"
   end
 
