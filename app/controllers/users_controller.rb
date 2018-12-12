@@ -27,7 +27,7 @@ class UsersController < ApplicationController
       return head :unauthorized
     end
 
-    if user.destroy
+    if user.approved ? user.discard : user.destroy
       flash[:notice] = "User #{user.email} successfully deleted"
     else
       flash[:warning] = "failure to delete #{user.email}"

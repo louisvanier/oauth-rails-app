@@ -68,6 +68,8 @@ GEM
       railties (>= 4.1.0, < 6.0)
       responders
       warden (~> 1.2.3)
+    discard (1.0.0)
+      activerecord (>= 4.2, < 6)
     erubi (1.7.1)
     execjs (2.7.0)
     factory_bot (4.11.1)
@@ -246,6 +248,7 @@ DEPENDENCIES
   byebug
   coffee-rails (~> 4.2)
   devise
+  discard
   factory_bot_rails
   jbuilder (~> 2.5)
   jquery-rails
