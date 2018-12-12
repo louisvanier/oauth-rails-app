@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  include Discard::Model
+
   has_many :revenue_shares, inverse_of: :user
 
   validates :share_percentage, numericality: { greater_than: 0, lower_than: 100 }, presence: true
