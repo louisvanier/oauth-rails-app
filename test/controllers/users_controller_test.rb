@@ -80,7 +80,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
       user = create(:user)
     end
     create_and_sign_in_user(admin: true, subdomain: TEST_SUBDOMAIN)
-    patch approve_user_url(user)
+    patch approve_user_url(user), user: { share_percentage: 20}
     Apartment::Tenant.switch(TEST_SUBDOMAIN) do
       assert User.find_by(id: user.id).approved
     end

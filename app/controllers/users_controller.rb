@@ -28,9 +28,9 @@ class UsersController < ApplicationController
     end
 
     if user.destroy
-      flash[:notice] = "User #{user_to_delete.email} successfully deleted"
+      flash[:notice] = "User #{user.email} successfully deleted"
     else
-      flash[:warning] = "failure to delete #{user_to_delete.email}"
+      flash[:warning] = "failure to delete #{user.email}"
     end
 
     @users = User.all

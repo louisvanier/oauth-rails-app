@@ -30,6 +30,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     )
 
     if @user.persisted?
+      UserMailer.with(tenant: current_tenant, user: user, user_index_url: users_manage_url)
       flash[:notice] = 'Your authentication was successful, an administrator will approve your account' unless @user.approved
       sign_in @user, event: :authentication
       redirect_to get_redirection_path(@user.email)
