@@ -43,6 +43,7 @@ gem 'omniauth-facebook'
 gem 'apartment'
 gem 'puma_worker_killer'
 gem 'money-rails'
+gem 'stronger_parameters'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

@@ -1,4 +1,6 @@
 class RevenueSharesController < ApplicationController
+  include StrongerParameters::ControllerSupport::PermittedParameters
+
   rescue_from ActiveRecord::RecordNotFound do |_|
     head :not_found
   end
@@ -6,15 +8,16 @@ class RevenueSharesController < ApplicationController
   before_action :authenticate_user!
 
   # GET /revenue_shares
+  permitted_parameters :index, q: { start_date: Parameters.datetime, end_date: Parameters.datetime }, employee: Parameters.id
   def index
     unless is_admin?
       Rails.logger.info("[UNAUTHORIZED] non-admin user hitting #index endpoint")
       return head :unauthorized
     end
     @search_filters = {
-      start_date: search_params[:q].try!(:[], :start_date) || Date.today,
-      end_date: search_params[:q].try!(:[], :end_date) || Date.today,
-      employee: search_params[:employee],
+      start_date: params[:q].try!(:[], :start_date) || Date.today,
+      end_date: params[:q].try!(:[], :end_date) || Date.today,
+      employee: params[:employee],
     }
     @revenue_shares = RevenueShare.where(search_filters_to_sql_filters(@search_filters))
       .includes(:user)
@@ -36,22 +39,25 @@ class RevenueSharesController < ApplicationController
     render :index
   end
 
+  permitted_parameters :prepare, {}
   def prepare
     @latest_revenue_shares = current_user.revenue_shares.order(created_at: :desc).first(5)
     @new_revenue_share = current_user.revenue_shares.build
     render :prepare
   end
 
+  permitted_parameters :create, revenue_share: { amount: Parameters.float | Parameters.integer }
   def create
-    current_user.revenue_shares.build.create(amount: revenue_share_params[:amount].to_f, share_percentage: current_user.share_percentage)
+    current_user.revenue_shares.build.create(amount: params[:revenue_share][:amount].to_f, share_percentage: current_user.share_percentage)
     redirect_to prepare_revenue_shares_path, notice: 'Revenue share was successfully created.'
   end
 
+  permitted_parameters :update, id: Parameters.id, revenue_share: { amount: Parameters.float | Parameters.integer }
   def update
-    @revenue_share = RevenueShare.find_by!(id: params.permit(:id)[:id], user_id: current_user.id)
+    @revenue_share = RevenueShare.find_by!(id: params[:id], user_id: current_user.id)
     return head :unauthorized unless @revenue_share.can_update?
 
-    if @revenue_share.update(revenue_share_params)
+    if @revenue_share.create(amount: params[:revenue_share][:amount], share_percentage: current_user.share_percentage)
       redirect_to prepare_revenue_shares_path, notice: 'Revenue share was successfully updated.'
     else
       redirect_to prepare_revenue_shares_path, notice: 'Unable to update revenue share'
@@ -59,14 +65,6 @@ class RevenueSharesController < ApplicationController
   end
 
   private
-    # Never trust parameters from the scary internet, only allow the white list through.
-  def revenue_share_params
-    params.require(:revenue_share).permit(:amount)
-  end
-
-  def search_params
-    params.permit(:employee, q: {})
-  end
 
   def search_filters_to_sql_filters(filters)
     start_date = filters[:start_date].to_date
