@@ -7,7 +7,7 @@
         </div>
         <div class="row text-center">
           <div class="col">
-            <%= date_field(:q, :start_date, value: @search_filters[:start_date]) %>
+            <%= date_field(:q, :start_date, value: @search_filters[:start_date].strftime('%F')) %>
           </div>
         </div>
         <div class="row text-center">
@@ -15,7 +15,7 @@
         </div>
         <div class="row text-center">
           <div class="col">
-            <%= date_field(:q, :end_date, value: @search_filters[:end_date]) %>
+            <%= date_field(:q, :end_date, value: @search_filters[:end_date].strftime('%F')) %>
           </div>
         </div>
         <div class="row text-center">
@@ -45,8 +45,8 @@
     <%= form_tag(revenue_shares_index_path, method: 'get') do %>
       <div class="row">
           <div class="col-3 text-center">
-            <%= date_field(:q, :start_date, value: @search_filters[:start_date]) %>
-            <%= date_field(:q, :end_date, value: @search_filters[:end_date]) %>
+            <%= date_field(:q, :start_date, value: @search_filters[:start_date].strftime('%F')) %>
+            <%= date_field(:q, :end_date, value: @search_filters[:end_date].strftime('%F')) %>
           </div>
           <div class="col-2 text-center">
             <%= select_tag(:employee, options_for_select(@users_for_select, @search_filters[:employee])) %>

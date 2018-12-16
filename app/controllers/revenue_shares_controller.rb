@@ -8,7 +8,7 @@ class RevenueSharesController < ApplicationController
   before_action :authenticate_user!
 
   # GET /revenue_shares
-  permitted_parameters :index, q: { start_date: Parameters.datetime, end_date: Parameters.datetime }, employee: Parameters.id
+  permitted_parameters :index, q: { start_date: Parameters.datetime, end_date: Parameters.datetime }, employee: Parameters.integer
   def index
     unless is_admin?
       Rails.logger.info("[UNAUTHORIZED] non-admin user hitting #index endpoint")

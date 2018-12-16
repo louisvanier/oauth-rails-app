@@ -41,14 +41,26 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_empty response.body
   end
 
-  test '#delete deletes the user' do
+  test '#delete destroys the user if it is not approved' do
     user = nil
     Apartment::Tenant.switch(TEST_SUBDOMAIN) do
-      user = create(:user)
+      user = create(:user, approved: false)
     end
     create_and_sign_in_user(admin: true, subdomain: TEST_SUBDOMAIN)
     delete delete_user_url(user)
     assert_nil User.find_by(id: user.id)
+  end
+
+  test '#delete discards the user if it is approved' do
+    user = nil
+    Apartment::Tenant.switch(TEST_SUBDOMAIN) do
+      user = create(:user, approved: true)
+    end
+    create_and_sign_in_user(admin: true, subdomain: TEST_SUBDOMAIN)
+    delete delete_user_url(user)
+    Apartment::Tenant.switch(TEST_SUBDOMAIN) do
+      assert_equal true, user.reload.discarded?
+    end
   end
 
   test '#delete returns a 404 if the user des not exist' do
@@ -80,7 +92,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
       user = create(:user)
     end
     create_and_sign_in_user(admin: true, subdomain: TEST_SUBDOMAIN)
-    patch approve_user_url(user), user: { share_percentage: 20}
+    patch approve_user_url(user, user: { share_percentage: 20})
     Apartment::Tenant.switch(TEST_SUBDOMAIN) do
       assert User.find_by(id: user.id).approved
     end

@@ -18,7 +18,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     if current_tenant.is_admin?(email_address)
       users_manage_path
     else
-      prepare_revenu_shares_path
+      prepare_revenue_shares_path
     end
   end
 
@@ -27,10 +27,10 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     @user = User.from_omniauth(
       omniauth_data,
       current_tenant.is_admin?(omniauth_data['email']),
+      -> (user) { mail_new_user(user)}
     )
 
     if @user.persisted?
-      UserMailer.with(tenant: current_tenant, user: user, user_index_url: users_manage_url)
       flash[:notice] = 'Your authentication was successful, an administrator will approve your account' unless @user.approved
       sign_in @user, event: :authentication
       redirect_to get_redirection_path(@user.email)
@@ -38,5 +38,9 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       session["devise.#{provider_name}_data"] = request.env['omniauth.auth'].except(:extra)
       redirect_to new_user_registration_url, alert: @user.errors.full_messages.join("\n")
     end
+  end
+
+  def mail_new_user(user)
+    UserMailer.with(tenant: current_tenant, user: user, user_index_url: users_manage_url)
   end
 end

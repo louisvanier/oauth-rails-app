@@ -3,12 +3,12 @@ class User < ApplicationRecord
 
   has_many :revenue_shares, inverse_of: :user
 
-  validates :share_percentage, numericality: { greater_than: 0, lower_than: 100 }, presence: true
+  validates :share_percentage, numericality: { greater_than_or_equal: 0, lower_than: 100 }, presence: true
 
   devise :rememberable, :validatable,
          :omniauthable, omniauth_providers: [:google_oauth2, :facebook]
 
-  def self.from_omniauth(omniauth_data, approved)
+  def self.from_omniauth(omniauth_data, approved, new_record_handler)
     user = User.where(email: omniauth_data['email']).first
 
     unless user
@@ -20,6 +20,7 @@ class User < ApplicationRecord
         image_url: omniauth_data['image'],
         approved: approved,
       )
+      new_record_handler.call(user)
     end
     user
   end

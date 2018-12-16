@@ -17,8 +17,7 @@ class UsersController < ApplicationController
       Rails.logger.info("[UNAUTHORIZED] non-admin user hitting #index endpoint")
       return head :unauthorized
     end
-    @users = User.all
-    render :index
+    @users = User.all.where(discarded_at: nil)
   end
 
   def delete
@@ -33,8 +32,7 @@ class UsersController < ApplicationController
       flash[:warning] = "failure to delete #{user.email}"
     end
 
-    @users = User.all
-    render :index
+    redirect_to users_manage_url
   end
 
   def update
@@ -49,8 +47,7 @@ class UsersController < ApplicationController
       flash[:warning] = "Unable to update user at the moment"
     end
 
-    @users = User.all
-    render :index
+    redirect_to users_manage_url
   end
 
   def approve
@@ -66,7 +63,7 @@ class UsersController < ApplicationController
     end
 
     @users = User.all
-    render :index
+    redirect_to users_manage_url
   end
 
   private
