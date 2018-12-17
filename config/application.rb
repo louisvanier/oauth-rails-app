@@ -24,10 +24,11 @@ module TattooManager
     ActionMailer::Base.smtp_settings = {
       user_name: ENV['SENDGRID_USERNAME'],
       password: ENV['SENDGRID_PASSWORD'],
+      adress: 'smtp.sendgrid.net',
       domain: 'tehg4m3.com',
       port: 587,
       authentication: :plain,
-      enable_starttls_auto: true
+      enable_starttls_auto: true,
     }
   end
 end
