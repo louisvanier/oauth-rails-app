@@ -27,7 +27,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     @user = User.from_omniauth(
       omniauth_data,
       current_tenant.is_admin?(omniauth_data['email']),
-      -> (user) { mail_new_user(user)}
+      -> (user) { mail_new_user(user) }
     )
 
     if @user.persisted?
@@ -41,6 +41,6 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   def mail_new_user(user)
-    UserMailer.with(tenant: current_tenant, user: user, user_index_url: users_manage_url)
+    UserMailer.with(tenant: current_tenant, user: user, user_index_url: users_manage_url).new_user_created.deliver_later
   end
 end
