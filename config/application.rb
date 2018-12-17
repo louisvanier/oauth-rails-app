@@ -25,7 +25,7 @@ module TattooManager
       user_name: ENV['SENDGRID_USERNAME'],
       password: ENV['SENDGRID_PASSWORD'],
       adress: 'smtp.sendgrid.net',
-      domain: 'tehg4m3.com',
+      domain: 'oauth-test-sample-app.herokuapp.com',
       port: 587,
       authentication: :plain,
       enable_starttls_auto: true,
