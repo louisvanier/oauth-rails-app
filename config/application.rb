@@ -19,5 +19,15 @@ module TattooManager
 
     #use sidekiq for background workers
     config.active_job.queue_adapter = :sidekiq
+
+    #point actionMailer to sendgrid
+    ActionMailer::Base.smtp_settings = {
+      user_name: ENV['SENDGRID_USERNAME'],
+      password: ENV['SENDGRID_PASSWORD'],
+      domain: 'tehg4m3.com',
+      port: 587,
+      authentication: :plain,
+      enable_starttls_auto: true
+    }
   end
 end
