@@ -57,6 +57,16 @@ Rails.application.configure do
   # config.active_job.queue_adapter     = :resque
   # config.active_job.queue_name_prefix = "TattooManager_#{Rails.env}"
   config.action_mailer.perform_caching = false
+  #point actionMailer to sendgrid
+  ActionMailer::Base.smtp_settings = {
+    user_name: ENV['SENDGRID_USERNAME'],
+    password: ENV['SENDGRID_PASSWORD'],
+    adress: 'smtp.sendgrid.net',
+    domain: 'oauth-test-sample-app.herokuapp.com',
+    port: 587,
+    authentication: :plain,
+    enable_starttls_auto: true,
+  }
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
