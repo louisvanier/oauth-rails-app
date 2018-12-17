@@ -41,6 +41,6 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   def mail_new_user(user)
-    UserMailer.with(tenant: current_tenant, user: user, user_index_url: users_manage_url).new_user_created.deliver_later
+    UserMailer.with(tenant: current_tenant, user_id: user.id, user_index_url: users_manage_url).new_user_created.deliver_later
   end
 end
