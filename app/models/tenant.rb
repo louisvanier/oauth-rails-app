@@ -14,7 +14,7 @@ end
 
 class NilTenant
   def subdomain
-    ''
+    'TEHG4M3'
   end
 
   def is_admin?(email_address)
