@@ -9,7 +9,7 @@ class UsersController < ApplicationController
 
   def login
     Rails.logger.info("#{session}")
-    render :login, layout: 'layouts/login'
+    render :login
   end
 
   def index

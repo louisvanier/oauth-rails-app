@@ -16,6 +16,6 @@ class RevenueShare < ApplicationRecord
   end
 
   def can_update?
-    (((Time.now.utc - created_at.utc) % 3600) / 60) <= 5
+    ((Time.now.utc - created_at.utc) / 60) <= 5.0
   end
 end
