@@ -9,14 +9,16 @@
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-  <link rel="manifest" href="/manifest.json" />
+  <link rel="manifest" href="<%= pwa_manifest_path %>" />
 <meta name="apple-mobile-web-app-capable" content="yes"></head>
 
   <body class="w-75" style="margin: 0 auto;">
     <% unless current_user.nil? %>
       <nav class="navbar navbar-light bg-light navbar-expand-lg container-fluid">
         <a class="navbar-brand" href="/"><%= (current_tenant.subdomain || 'TEHG4M3.COM').humanize %></a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"></button>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
+          <span class="navbar-toggler-icon"></span>
+        </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
             <%= render partial: 'menu_item', collection: menu_items %>
