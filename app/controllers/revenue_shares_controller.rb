@@ -35,15 +35,21 @@ class RevenueSharesController < ApplicationController
     @users_for_select = User.all.select { |u| !current_tenant.is_admin?(u.email) }.map do |u|
       [u.name, u.id]
     end.insert(0, ['do not filter by user', -1])
-
-    render :index
   end
 
   permitted_parameters :prepare, {}
   def prepare
     @latest_revenue_shares = current_user.revenue_shares.order(created_at: :desc).first(5)
     @new_revenue_share = current_user.revenue_shares.build
-    render :prepare
+  end
+
+  permitted_parameters :mine, q: { start_date: Parameters.datetime, end_date: Parameters.datetime }
+  def mine
+    @search_filters = {
+      start_date: params[:q].try!(:[], :start_date) || Date.today,
+      end_date: params[:q].try!(:[], :end_date) || Date.today,
+    }
+    @my_revenue_shares = RevenueShare.where(user_id: current_user.id).where(search_filters_to_sql_filters(@search_filters))
   end
 
   permitted_parameters :create, revenue_share: { amount: Parameters.float | Parameters.integer }
@@ -71,7 +77,7 @@ class RevenueSharesController < ApplicationController
     end_date = filters[:end_date].to_date
     {
       created_at: start_date.beginning_of_day..end_date.end_of_day,
-      user_id: filters[:employee].to_i == -1 ? nil : filters[:employee]
+      user_id: filters[:employee]&.to_i == -1 ? nil : filters[:employee]
     }.compact
   end
 end

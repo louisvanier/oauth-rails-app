@@ -13,12 +13,12 @@
     <div class="col-4 col-md-2 font-weight-bold">
       Date
     </div>
-    <div class="col-4 col-md-2 font-weight-bold">
+    <div class="col-4 col-md-2 font-weight-bold text-right">
       Amount
     </div>
-    <div class="col font-weight-bold">
+    <div class="col font-weight-bold text-right">
       Share due
     </div>
   </div>
-  <%= render partial: "revenue_share", collection: @latest_revenue_shares, as: :revenue_share %>
+  <%= render partial: "revenue_share", collection: @latest_revenue_shares, as: :revenue_share, locals: { editable: true } %>
 </div>

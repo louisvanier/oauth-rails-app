@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :revenue_shares, only: [:index, :create, :update], format: :html do
+  resources :revenue_shares, only: [:index, :create, :update, :new], format: :html do
     collection do
       get :prepare
     end
@@ -25,7 +25,6 @@ Rails.application.routes.draw do
 
   match 'users/login', to: 'users#login', via: [:get]
 
-  get 'revenue_shares/index'
-  get 'revenue_shares/new'
+  get 'revenue_shares/mine', to: 'revenue_shares#mine'
   root 'users#login'
 end

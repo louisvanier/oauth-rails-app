@@ -1,11 +1,11 @@
 <div class="row<%= revenue_share_counter.odd? ? ' bg-light' : '' %>">
   <div class="col-4 col-md-2 align-self-center"><%= revenue_share.created_at.strftime('%F') %></div>
-  <div class="col-4 col-md-2 align-self-center">
-    <% if revenue_share.can_update? %>
+  <div class="col-4 col-md-2 align-self-center text-right">
+    <% if revenue_share.can_update? && true %>
       <%= render partial: "form", locals: { revenue_share: revenue_share } %>
     <% else %>
       <%= revenue_share.amount %>
     <% end %>
   </div>
-  <div class="col align-self-center"><%= revenue_share.share_due %></div>
+  <div class="col-2 align-self-center text-right"><%= revenue_share.share_due %></div>
 </div>
