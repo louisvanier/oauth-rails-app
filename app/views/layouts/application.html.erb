@@ -15,7 +15,7 @@
   <body class="w-75" style="margin: 0 auto;">
     <% unless current_user.nil? %>
       <nav class="navbar navbar-light bg-light navbar-expand-lg container-fluid">
-        <a class="navbar-brand" href="/"><%= (current_tenant.subdomain || 'TEHG4M3.COM').humanize %></a>
+        <a class="navbar-brand" href="/"><img class="px-1" src="<%= image_path "serviceworker-rails/#{current_tenant.subdomain}-32x32.png" %>" /><%= (current_tenant.subdomain || 'TEHG4M3.COM').humanize %></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
           <span class="navbar-toggler-icon"></span>
         </button>
