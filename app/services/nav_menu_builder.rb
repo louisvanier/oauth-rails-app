@@ -9,7 +9,7 @@ class NavMenuBuilder
   end
 
   def menu_items
-    send("#{@user_role}_menu_items")
+    Hash[send("#{@user_role}_menu_items").group_by(&:category) ]
   end
 
   private
@@ -17,13 +17,14 @@ class NavMenuBuilder
   def admin_menu_items
     [
       NavMenuItem.new(label: 'Users', navigation_path: users_manage_path),
-      NavMenuItem.new(label: 'Revenues', navigation_path: revenue_shares_index_path)
+      NavMenuItem.new(label: 'Revenues', navigation_path: revenue_shares_path)
     ]
   end
 
   def user_menu_items
     [
-      NavMenuItem.new(label: 'Revenues', navigation_path: prepare_revenue_shares_path)
+      NavMenuItem.new(label: 'add', navigation_path: prepare_revenue_shares_path, category: 'Revenues'),
+      NavMenuItem.new(label: 'view all', navigation_path: revenue_shares_mine_path, category: 'Revenues')
     ]
   end
 end

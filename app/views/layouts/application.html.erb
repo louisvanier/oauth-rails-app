@@ -21,7 +21,10 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
-            <%= render partial: 'menu_item', collection: menu_items %>
+            <% menu_items.each_key do |key| %>
+              <%= render(partial: 'menu_item_category', locals: { menu_items: menu_items[key], category_label: key }) unless key.nil? %>
+            <% end %>
+            <%= render partial: 'menu_item', collection: menu_items[nil] %>
           </ul>
         </div>
       </nav>

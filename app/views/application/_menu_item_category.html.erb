@@ -1,0 +1,6 @@
+<li class="nav-item dropdown">
+  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown<%= category_label %>" data-toggle="dropdown" role="button"><%= category_label %></a>
+  <div class="dropdown-menu">
+    <%= render partial: 'drop_down_menu_item', collection: menu_items, as: :menu_item %>
+  </div>
+</li>
