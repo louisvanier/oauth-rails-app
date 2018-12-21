@@ -26,7 +26,7 @@ Rails.application.routes.draw do
   match 'users/login', to: 'users#login', via: [:get]
 
   get 'revenue_shares/mine', to: 'revenue_shares#mine'
-  get 'pwa/manifest', to: 'pwa#manifest', constraints: { format: 'json' }
+  get 'manifest', to: 'pwa#manifest', constraints: { format: 'json' }
 
   root 'users#login'
 end
